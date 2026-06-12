@@ -1,0 +1,490 @@
+/* ---------- トークン ---------- */
+:root {
+  --c-bg-top: #1a1f4d;
+  --c-bg-bottom: #3a2a5e;
+  --c-window: #0b1538;
+  --c-window-edge: #ffffff;
+  --c-text: #f5f3ea;
+  --c-muted: #9aa3c7;
+  --c-gold: #f3c43e;
+  --c-gold-dark: #b8902a;
+  --c-hp-green: #4ecb71;
+  --c-mp-blue: #4e9fcb;
+  --c-danger: #e06a6a;
+  --c-done: #7d86ad;
+  --font-rpg: 'DotGothic16', 'Noto Sans JP', system-ui, sans-serif;
+}
+
+/* ---------- グローバル ---------- */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-rpg);
+  color: var(--c-text);
+  background: linear-gradient(180deg, var(--c-bg-top) 0%, var(--c-bg-bottom) 100%) fixed;
+  min-height: 100vh;
+  line-height: 1.7;
+}
+
+button,
+input,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+/* ---------- レイアウト ---------- */
+.app {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 12px 12px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* RPGメッセージウィンドウ風パネル（白の二重枠） */
+.window {
+  background: var(--c-window);
+  border: 3px solid var(--c-window-edge);
+  border-radius: 8px;
+  box-shadow:
+    inset 0 0 0 2px var(--c-window),
+    inset 0 0 0 4px rgba(255, 255, 255, 0.55),
+    0 4px 14px rgba(0, 0, 0, 0.45);
+  padding: 14px;
+}
+
+/* ---------- Header ---------- */
+.header__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.header__title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: normal;
+  letter-spacing: 0.04em;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.6);
+}
+
+.header__reset {
+  background: none;
+  border: 2px solid var(--c-muted);
+  border-radius: 6px;
+  color: var(--c-muted);
+  font-size: 11px;
+  padding: 6px 8px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.header__reset:hover {
+  border-color: var(--c-danger);
+  color: var(--c-danger);
+}
+
+.header__status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.header__level {
+  color: var(--c-gold);
+  font-size: 15px;
+  white-space: nowrap;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.6);
+}
+
+/* ---------- EXPバー ---------- */
+.exp-bar {
+  position: relative;
+  flex: 1;
+  height: 22px;
+  background: rgba(0, 0, 0, 0.55);
+  border: 2px solid var(--c-window-edge);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.exp-bar__fill {
+  height: 100%;
+  transition: width 0.35s ease;
+}
+
+.exp-bar--gold .exp-bar__fill {
+  background: linear-gradient(180deg, var(--c-gold) 0%, var(--c-gold-dark) 100%);
+}
+
+.exp-bar--green .exp-bar__fill {
+  background: linear-gradient(180deg, var(--c-hp-green) 0%, #2e8c4d 100%);
+}
+
+.exp-bar__label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  text-shadow:
+    1px 1px 0 rgba(0, 0, 0, 0.8),
+    -1px -1px 0 rgba(0, 0, 0, 0.8);
+}
+
+/* ---------- 章ナビ ---------- */
+.chapter-nav {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 2px 2px 6px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+.chapter-nav__chip {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 0 0 auto;
+  min-height: 44px;
+  padding: 6px 10px;
+  background: var(--c-window);
+  border: 2px solid rgba(255, 255, 255, 0.45);
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  color: var(--c-muted);
+}
+
+.chapter-nav__chip--selected {
+  border-color: var(--c-window-edge);
+  color: var(--c-text);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.35);
+}
+
+.chapter-nav__cursor {
+  width: 1em;
+  color: var(--c-gold);
+}
+
+.chapter-nav__count {
+  font-size: 11px;
+  color: var(--c-gold);
+}
+
+/* ---------- 章ビュー ---------- */
+.chapter__header {
+  border-bottom: 2px dashed rgba(255, 255, 255, 0.25);
+  padding-bottom: 12px;
+  margin-bottom: 4px;
+}
+
+.chapter__title {
+  margin: 0 0 4px;
+  font-size: 17px;
+  font-weight: normal;
+  letter-spacing: 0.03em;
+}
+
+.chapter__desc {
+  margin: 0 0 10px;
+  font-size: 12px;
+  color: var(--c-muted);
+}
+
+.chapter__quests {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- クエスト ---------- */
+.quest {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 10px 0;
+}
+
+.quest__row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.quest__check {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  cursor: pointer;
+}
+
+.quest__check input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.quest__box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 2px solid var(--c-window-edge);
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.4);
+  font-size: 18px;
+  color: var(--c-gold);
+}
+
+.quest__check input:focus-visible + .quest__box {
+  outline: 2px solid var(--c-gold);
+  outline-offset: 2px;
+}
+
+.quest__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-top: 8px;
+}
+
+.quest__title {
+  font-size: 14px;
+}
+
+.quest--done .quest__title {
+  color: var(--c-done);
+  text-decoration: line-through;
+}
+
+.quest__desc {
+  font-size: 11px;
+  color: var(--c-muted);
+}
+
+.quest__clear {
+  font-size: 11px;
+  color: var(--c-gold);
+}
+
+.quest__actions {
+  display: flex;
+  flex: 0 0 auto;
+}
+
+.quest__icon-btn {
+  background: none;
+  border: none;
+  min-width: 40px;
+  min-height: 44px;
+  font-size: 16px;
+  cursor: pointer;
+  opacity: 0.7;
+  padding: 0;
+}
+
+.quest__icon-btn:hover,
+.quest__icon-btn--active {
+  opacity: 1;
+}
+
+.quest__memo {
+  width: 100%;
+  margin-top: 6px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-radius: 6px;
+  padding: 8px;
+  font-size: 13px;
+  resize: vertical;
+}
+
+/* ---------- ボタン・フォーム ---------- */
+.btn {
+  background: var(--c-window);
+  border: 2px solid var(--c-window-edge);
+  border-radius: 6px;
+  padding: 10px 16px;
+  min-height: 44px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.btn--primary {
+  background: linear-gradient(180deg, var(--c-gold) 0%, var(--c-gold-dark) 100%);
+  color: #2a2008;
+  border-color: var(--c-gold);
+}
+
+.btn--primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn--add {
+  margin-top: 12px;
+  width: 100%;
+  border-style: dashed;
+  color: var(--c-gold);
+}
+
+.quest-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 12px;
+  border: 2px dashed rgba(255, 255, 255, 0.35);
+  border-radius: 8px;
+}
+
+.quest-form__input,
+.quest-form__textarea {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-radius: 6px;
+  padding: 10px;
+  font-size: 14px;
+}
+
+.quest-form__textarea {
+  resize: vertical;
+}
+
+.quest-form__actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* ---------- 章メモ ---------- */
+.chapter__memo {
+  margin-top: 18px;
+}
+
+.chapter__memo-title {
+  margin: 0 0 6px;
+  font-size: 13px;
+  font-weight: normal;
+  color: var(--c-muted);
+}
+
+.chapter__memo-input {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-radius: 6px;
+  padding: 10px;
+  font-size: 13px;
+  resize: vertical;
+}
+
+/* ---------- フッター ---------- */
+.app__footer {
+  text-align: center;
+  font-size: 11px;
+  color: var(--c-muted);
+}
+
+.app__footer p {
+  margin: 0;
+}
+
+/* ---------- レベルアップ演出 ---------- */
+.levelup {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 100;
+  animation: levelup-fade 0.25s ease-out;
+  cursor: pointer;
+}
+
+.levelup__window {
+  text-align: center;
+  padding: 24px 36px;
+  animation: levelup-pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.levelup__sparkle {
+  margin: 0;
+  color: var(--c-gold);
+  letter-spacing: 0.5em;
+  animation: levelup-blink 0.8s step-end infinite;
+}
+
+.levelup__text {
+  margin: 8px 0 4px;
+  font-size: 20px;
+  color: var(--c-gold);
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.7);
+}
+
+.levelup__level {
+  margin: 0;
+  font-size: 14px;
+}
+
+@keyframes levelup-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes levelup-pop {
+  from {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+}
+
+@keyframes levelup-blink {
+  50% {
+    opacity: 0.2;
+  }
+}
+
+/* ---------- タブレット以上 ---------- */
+@media (min-width: 768px) {
+  .app {
+    padding: 24px 16px 60px;
+    gap: 16px;
+  }
+
+  .header__title {
+    font-size: 24px;
+  }
+
+  .chapter-nav {
+    flex-wrap: wrap;
+    overflow-x: visible;
+  }
+
+  .quest__title {
+    font-size: 15px;
+  }
+}
