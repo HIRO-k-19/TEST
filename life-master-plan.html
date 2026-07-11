@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LIFE MASTER PLAN — HIRO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Serif+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#14110f;
+    --ink-soft:#1d1916;
+    --bg:#faf8f5;
+    --bg-cream:#f3efe8;
+    --text:#211d1a;
+    --muted:#8c847b;
+    --line:#e7e1d8;
+    --gold:#b8965f;
+    --gold-bright:#d8b878;
+    --gold-deep:#a07c46;
+    --white:#ffffff;
+    --font-en:'Cormorant Garamond',serif;
+    --font-jp:'Noto Sans JP',sans-serif;
+    --font-serif-jp:'Noto Serif JP',serif;
+    --max-w:1080px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--font-jp);
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.9;
+    letter-spacing:.04em;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img{max-width:100%;display:block;}
+  a{color:inherit;text-decoration:none;}
+  .container{width:100%;max-width:var(--max-w);margin:0 auto;padding:0 28px;}
+  .en-label{
+    font-family:var(--font-en);
+    font-style:italic;
+    letter-spacing:.22em;
+    color:var(--gold);
+    font-size:15px;
+    text-transform:uppercase;
+  }
+  .section{padding:130px 0;}
+  .section__head{max-width:720px;margin:0 auto 70px;text-align:center;}
+  .section__title{
+    font-family:var(--font-serif-jp);
+    font-weight:600;
+    font-size:clamp(26px,3.6vw,40px);
+    line-height:1.4;
+    margin:14px 0 0;
+    letter-spacing:.04em;
+  }
+  .section__lead{margin-top:22px;color:var(--muted);font-size:15px;line-height:2;}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    background:radial-gradient(120% 90% at 70% 10%,#2a231d 0%,var(--ink) 55%,#0d0b09 100%);
+    color:#f4efe7;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute;inset:0;
+    background:
+      radial-gradient(60% 50% at 85% 80%,rgba(184,150,95,.18),transparent 60%),
+      radial-gradient(40% 40% at 10% 20%,rgba(216,184,120,.10),transparent 60%);
+    pointer-events:none;
+  }
+  .hero__wordmark{
+    position:absolute;top:34px;left:0;right:0;
+    text-align:center;
+    font-family:var(--font-en);
+    letter-spacing:.5em;
+    font-size:16px;
+    color:rgba(244,239,231,.7);
+    text-transform:uppercase;
+    padding-left:.5em;
+  }
+  .hero__inner{position:relative;z-index:2;padding:120px 0 90px;}
+  .hero__en{
+    font-family:var(--font-en);
+    font-style:italic;
+    color:var(--gold-bright);
+    letter-spacing:.24em;
+    font-size:clamp(15px,2vw,19px);
+    text-transform:uppercase;
+  }
+  .hero__title{
+    font-family:var(--font-serif-jp);
+    font-weight:700;
+    font-size:clamp(38px,7vw,84px);
+    line-height:1.24;
+    margin:26px 0 0;
+    letter-spacing:.02em;
+  }
+  .hero__title .accent{color:var(--gold-bright);}
+  .hero__sub{
+    margin-top:34px;
+    max-width:620px;
+    font-size:clamp(14px,1.6vw,16px);
+    color:rgba(244,239,231,.78);
+    line-height:2.1;
+    font-weight:300;
+  }
+  .hero__meta{
+    margin-top:52px;
+    display:flex;
+    gap:44px;
+    flex-wrap:wrap;
+  }
+  .hero__stat .n{
+    font-family:var(--font-en);
+    font-size:clamp(28px,4vw,44px);
+    font-weight:600;
+    color:var(--gold-bright);
+    line-height:1;
+  }
+  .hero__stat .l{font-size:12px;letter-spacing:.16em;color:rgba(244,239,231,.6);margin-top:10px;}
+  .scroll-cue{
+    position:absolute;bottom:30px;left:50%;transform:translateX(-50%);
+    font-family:var(--font-en);letter-spacing:.3em;font-size:12px;
+    color:rgba(244,239,231,.5);z-index:2;text-transform:uppercase;
+  }
+
+  /* ---------- Values ---------- */
+  .values{background:var(--bg);}
+  .values__grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  .value{
+    background:var(--bg);
+    padding:44px 34px;
+    transition:background .35s ease,transform .35s ease;
+  }
+  .value:hover{background:var(--white);}
+  .value__num{
+    font-family:var(--font-en);
+    font-size:38px;
+    color:var(--gold);
+    line-height:1;
+    font-weight:500;
+  }
+  .value__name{
+    font-family:var(--font-serif-jp);
+    font-weight:600;
+    font-size:21px;
+    margin:18px 0 14px;
+    letter-spacing:.05em;
+  }
+  .value__desc{font-size:14px;color:#5b544c;line-height:1.95;}
+  .value__tag{
+    display:inline-block;margin-top:18px;
+    font-family:var(--font-en);font-style:italic;letter-spacing:.14em;
+    font-size:13px;color:var(--gold-deep);
+  }
+
+  /* ---------- Voices ---------- */
+  .voices{
+    background:linear-gradient(180deg,var(--ink) 0%,var(--ink-soft) 100%);
+    color:#efe9e0;
+  }
+  .voices .section__title{color:#f4efe7;}
+  .voices .section__lead{color:rgba(239,233,224,.6);}
+  .voices__grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:24px;
+  }
+  .voice{
+    border:1px solid rgba(184,150,95,.28);
+    border-radius:3px;
+    padding:34px 32px;
+    background:rgba(255,255,255,.015);
+    position:relative;
+  }
+  .voice::before{
+    content:"“";
+    position:absolute;top:8px;right:22px;
+    font-family:var(--font-en);
+    font-size:70px;color:rgba(184,150,95,.32);line-height:1;
+  }
+  .voice__who{
+    font-family:var(--font-en);
+    font-style:italic;
+    letter-spacing:.16em;
+    color:var(--gold-bright);
+    font-size:15px;
+    margin-bottom:14px;
+  }
+  .voice__text{
+    font-family:var(--font-serif-jp);
+    font-weight:400;
+    font-size:15.5px;
+    line-height:2;
+    color:#e9e2d7;
+  }
+  .voice--wide{grid-column:1 / -1;}
+
+  /* ---------- Story ---------- */
+  .story{
+    background:
+      radial-gradient(90% 70% at 80% 0%,#26201a 0%,transparent 55%),
+      linear-gradient(180deg,#0f0d0b,#171310);
+    color:#e8e1d6;
+    position:relative;
+  }
+  .story__inner{max-width:760px;margin:0 auto;text-align:center;}
+  .story__date{
+    font-family:var(--font-en);font-style:italic;letter-spacing:.22em;
+    color:var(--gold-bright);font-size:17px;
+  }
+  .story__title{
+    font-family:var(--font-serif-jp);font-weight:600;
+    font-size:clamp(24px,3.4vw,36px);margin:16px 0 46px;line-height:1.5;
+  }
+  .story__p{
+    font-family:var(--font-serif-jp);
+    font-weight:400;
+    font-size:16px;
+    line-height:2.3;
+    color:#d8d0c4;
+    margin-bottom:30px;
+    text-align:left;
+  }
+  .story__p .hl{color:var(--gold-bright);font-weight:500;}
+  .story__stats{
+    margin-top:60px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:1px;
+    background:rgba(184,150,95,.25);
+    border:1px solid rgba(184,150,95,.25);
+  }
+  .story__stat{background:#141110;padding:30px 16px;text-align:center;}
+  .story__stat .n{
+    font-family:var(--font-en);font-weight:600;font-size:clamp(24px,3vw,34px);
+    color:var(--gold-bright);line-height:1.05;
+  }
+  .story__stat .l{font-size:11.5px;letter-spacing:.12em;color:rgba(232,225,214,.55);margin-top:10px;}
+
+  /* ---------- Targets ---------- */
+  .targets{background:var(--bg-cream);}
+  .targets__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-bottom:24px;}
+  .target{
+    background:var(--white);
+    border:1px solid var(--line);
+    border-top:3px solid var(--gold);
+    border-radius:3px;
+    padding:38px 30px;
+    text-align:center;
+  }
+  .target__cat{font-family:var(--font-en);font-style:italic;letter-spacing:.16em;color:var(--gold-deep);font-size:14px;}
+  .target__n{
+    font-family:var(--font-en);font-weight:600;
+    font-size:clamp(34px,5vw,50px);color:var(--ink);line-height:1;margin:16px 0 8px;
+  }
+  .target__label{font-size:14px;color:#5b544c;font-weight:500;}
+  .target__note{font-size:12px;color:var(--muted);margin-top:12px;line-height:1.7;}
+
+  .subgrid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:44px;}
+  .panel{background:var(--white);border:1px solid var(--line);border-radius:3px;padding:34px 32px;}
+  .panel__title{
+    font-family:var(--font-serif-jp);font-weight:600;font-size:18px;
+    margin-bottom:22px;padding-bottom:14px;border-bottom:1px solid var(--line);
+    letter-spacing:.04em;
+  }
+  .panel__title .en{font-family:var(--font-en);font-style:italic;color:var(--gold);font-size:14px;margin-left:10px;letter-spacing:.12em;}
+  .checklist{list-style:none;}
+  .checklist li{
+    position:relative;padding:11px 0 11px 30px;
+    font-size:14.5px;color:#3c362f;border-bottom:1px dashed var(--line);line-height:1.7;
+  }
+  .checklist li:last-child{border-bottom:none;}
+  .checklist li::before{
+    content:"";position:absolute;left:2px;top:17px;
+    width:12px;height:12px;border:1.5px solid var(--gold);border-radius:2px;
+  }
+  .checklist li b{color:var(--ink);font-weight:700;}
+
+  /* ---------- Closing ---------- */
+  .closing{
+    background:radial-gradient(120% 100% at 50% 0%,#26201a,var(--ink) 60%,#0c0a08);
+    color:#f2ece2;text-align:center;padding:140px 0;
+  }
+  .closing__en{font-family:var(--font-en);font-style:italic;letter-spacing:.24em;color:var(--gold-bright);font-size:17px;text-transform:uppercase;}
+  .closing__line{
+    font-family:var(--font-serif-jp);font-weight:700;
+    font-size:clamp(28px,5vw,52px);line-height:1.5;margin:26px 0 0;letter-spacing:.03em;
+  }
+  .closing__line .accent{color:var(--gold-bright);}
+  .closing__sub{margin-top:30px;color:rgba(242,236,226,.7);font-size:15px;line-height:2;}
+  .closing__sign{
+    margin-top:56px;font-family:var(--font-en);letter-spacing:.4em;
+    font-size:15px;color:rgba(242,236,226,.55);text-transform:uppercase;
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:900px){
+    .section{padding:100px 0;}
+    .values__grid{grid-template-columns:1fr 1fr;}
+    .story__stats{grid-template-columns:repeat(2,1fr);}
+    .targets__grid{grid-template-columns:1fr;}
+  }
+  @media (max-width:768px){
+    .container{padding:0 22px;}
+    .section{padding:84px 0;}
+    .section__head{margin-bottom:50px;}
+    .voices__grid{grid-template-columns:1fr;}
+    .subgrid{grid-template-columns:1fr;}
+    .hero__meta{gap:30px;}
+  }
+  @media (max-width:600px){
+    .values__grid{grid-template-columns:1fr;}
+    .story__stats{grid-template-columns:1fr 1fr;}
+    .hero__title{font-size:12vw;}
+  }
+</style>
+</head>
+<body>
+
+  <!-- ===== HERO ===== -->
+  <header class="hero">
+    <div class="hero__wordmark">HIRO — LIFE MASTER PLAN</div>
+    <div class="container">
+      <div class="hero__inner">
+        <p class="hero__en">The plan for a life run to the very end</p>
+        <h1 class="hero__title">走り切る人生って、<br><span class="accent">最高やった。</span></h1>
+        <p class="hero__sub">
+          挑戦しきった。自分を超えた。生きるって最高。——
+          死ぬ時、そう自分に言える人生を、逆算で設計する。
+          男気・快楽・挑戦・富・家族・影響。6つの価値で貫く一代記。
+        </p>
+        <div class="hero__meta">
+          <div class="hero__stat"><div class="n">6</div><div class="l">CORE VALUES</div></div>
+          <div class="hero__stat"><div class="n">2033</div><div class="l">7年後のゴール</div></div>
+          <div class="hero__stat"><div class="n">¥5億</div><div class="l">年商ビジョン</div></div>
+          <div class="hero__stat"><div class="n">300万</div><div class="l">総フォロワー</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-cue">SCROLL</div>
+  </header>
+
+  <!-- ===== VALUES ===== -->
+  <section class="section values">
+    <div class="container">
+      <div class="section__head">
+        <span class="en-label">Core Values</span>
+        <h2 class="section__title">6つのコアバリュー</h2>
+        <p class="section__lead">「〜することは、価値のある、賞賛すべきことだ」で言い切れる、人生の軸。<br>（v2.1・2026-07-02更新）</p>
+      </div>
+      <div class="values__grid">
+        <div class="value">
+          <div class="value__num">01</div>
+          <h3 class="value__name">男気</h3>
+          <p class="value__desc">いざという時、その強さを大切な人を守るために使うことは、価値のある、賞賛すべきことだ。</p>
+          <span class="value__tag">Guts</span>
+        </div>
+        <div class="value">
+          <div class="value__num">02</div>
+          <h3 class="value__name">快楽・生の肯定</h3>
+          <p class="value__desc">やりたいことを我慢せず、「生きるって最高」と生きることは、価値のある、賞賛すべきことだ。</p>
+          <span class="value__tag">Live Fully</span>
+        </div>
+        <div class="value">
+          <div class="value__num">03</div>
+          <h3 class="value__name">挑戦</h3>
+          <p class="value__desc">何歳になっても挑戦し続けることは、価値のある、賞賛すべきことだ。</p>
+          <span class="value__tag">Challenge</span>
+        </div>
+        <div class="value">
+          <div class="value__num">04</div>
+          <h3 class="value__name">富</h3>
+          <p class="value__desc">一代で莫大な富を築き、別格と呼ばれることは、価値のある、賞賛すべきことだ。</p>
+          <span class="value__tag">Wealth</span>
+        </div>
+        <div class="value">
+          <div class="value__num">05</div>
+          <h3 class="value__name">家族・愛</h3>
+          <p class="value__desc">愛する家族を幸せにすることは、価値のある、賞賛すべきことだ。</p>
+          <span class="value__tag">Family &amp; Love</span>
+        </div>
+        <div class="value">
+          <div class="value__num">06</div>
+          <h3 class="value__name">影響・人を救う</h3>
+          <p class="value__desc">困っている人を助け、「あの人がいなかったら今どうなっていたか」と言われることは、価値のある、賞賛すべきことだ。</p>
+          <span class="value__tag">Impact</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== VOICES ===== -->
+  <section class="section voices">
+    <div class="container">
+      <div class="section__head">
+        <span class="en-label">Words at the End</span>
+        <h2 class="section__title">死ぬ時、まわりに言われたい言葉</h2>
+        <p class="section__lead">本音で。綺麗事にしない。この言葉から、すべてを逆算する。</p>
+      </div>
+      <div class="voices__grid">
+        <div class="voice">
+          <div class="voice__who">娘・あんり</div>
+          <p class="voice__text">パパ、ありがとう。パパの子で本当によかった。世界で一番かっこよくて大好き。感謝しかない。</p>
+        </div>
+        <div class="voice">
+          <div class="voice__who">父</div>
+          <p class="voice__text">よう頑張ったな、お前一人でここまで。立派や、自慢の息子や。</p>
+        </div>
+        <div class="voice">
+          <div class="voice__who">母</div>
+          <p class="voice__text">あんたがいてくれて幸せやった。よう頑張った。ありがとう。</p>
+        </div>
+        <div class="voice">
+          <div class="voice__who">姉</div>
+          <p class="voice__text">自慢の弟だ。ゆっくり休んでね。あんたのおかげでみんな幸せやった。愛してる。</p>
+        </div>
+        <div class="voice">
+          <div class="voice__who">ともちゃん</div>
+          <p class="voice__text">人間味があって不器用で、だけどまっすぐで、そんなあなたが大好きでした。出会ってくれてありがとう。</p>
+        </div>
+        <div class="voice">
+          <div class="voice__who">助けた人</div>
+          <p class="voice__text">あの人に助けられた。いなかったら今どうなってたか。感謝しかない。</p>
+        </div>
+        <div class="voice voice--wide">
+          <div class="voice__who">世の中</div>
+          <p class="voice__text">マジでかっこよかった。優しくて謙虚で分け隔てなく、なのに男気があって強かった。伝説残したな。「お金どんだけ残したん、別格やな」。訃報に驚き、過去のSNSをみんなで見返す。</p>
+        </div>
+        <div class="voice">
+          <div class="voice__who">友人</div>
+          <p class="voice__text">自由に生きて、楽しんで、型にはまらず挑戦して、かっこいい人生やな。羨ましい。</p>
+        </div>
+        <div class="voice">
+          <div class="voice__who">自分自身</div>
+          <p class="voice__text">走り切る人生って最高やった。挑戦しきった、自分を超えた。生きるって最高。みんな大好き。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== STORY 2033 ===== -->
+  <section class="section story">
+    <div class="container">
+      <div class="story__inner">
+        <p class="story__date">June 22, 2033</p>
+        <h2 class="story__title">7年後の、ある1日</h2>
+
+        <p class="story__p">
+          2033年6月22日（水）。49歳。年4回の家族旅行の一回、海の見えるヴィラで目を覚ます。28度、湿気のない風、白い砂浜、透き通った海。朝シャワーを浴びて、ふと自分の体を見る。大胸筋は膨れ上がり、腹筋は6つに割れ、肩はがっちり。<span class="hl">体脂肪15%、見た目はマイナス15歳。</span>鍛えてきたから旅先を一日中歩けるし、いざという時、大切な人を守れる力がある。
+        </p>
+        <p class="story__p">
+          リビングに出ると、キッチンカウンターで母とあんり(15)が笑って喋ってる。波の音に混じる二人の笑い声を、コーヒー片手にただ眺める。<span class="hl">「……最高やん。これが成功じゃん。このためだけに、やってきたんやな」。</span>
+        </p>
+        <p class="story__p">
+          普段は三重県、家賃6万5千円の質素なアパート暮らし。年商5億・年収1.2億あっても、暮らしは地味なまま——金は自分の贅沢でなく、あんりの未来と、応援したい連中と、家族のため。月に10回以上、東京や地方へ飛び、行く先々で「あ、ひろさんだ」と声をかけられる。SNS総フォロワー300万人。本気で手を引いて人生を変えた人は6万人。<span class="hl">「あの人がいなかったら、今どうなってたか」——その一言が、どんな大金より嬉しい。</span>49歳の中年の星。
+        </p>
+        <p class="story__p">
+          これだけ成功しても偉ぶらず、誰にでも腰は低いまま。仕事は、死んでも背中を預けられる同志5人と。今年、KADOKAWAから自伝を出す。49歳でも、まだ挑戦してる。
+        </p>
+        <p class="story__p">
+          夜は母とあんり、そこへともちゃんとおうちゃんも合流して、海辺のテーブルを囲み、よく笑う。寝る前にふと思う——<span class="hl">「一人で背負ってきたつもりが、いつも誰かに助けられてた。“助けたい”と思ってもらえる人間で、いられたんやな」。</span>最高の49歳。まだまだ、ここから。
+        </p>
+
+        <div class="story__stats">
+          <div class="story__stat"><div class="n">¥5億</div><div class="l">年商</div></div>
+          <div class="story__stat"><div class="n">¥1.2億</div><div class="l">年収</div></div>
+          <div class="story__stat"><div class="n">300万</div><div class="l">総フォロワー</div></div>
+          <div class="story__stat"><div class="n">6万人</div><div class="l">人生を変えた人</div></div>
+          <div class="story__stat"><div class="n">15%</div><div class="l">体脂肪率</div></div>
+          <div class="story__stat"><div class="n">同志5</div><div class="l">背中を預ける仲間</div></div>
+          <div class="story__stat"><div class="n">年4回</div><div class="l">家族旅行</div></div>
+          <div class="story__stat"><div class="n">¥6.5万</div><div class="l">家賃（質素なまま）</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TARGETS (JULY 2026) ===== -->
+  <section class="section targets">
+    <div class="container">
+      <div class="section__head">
+        <span class="en-label">This Month · July 2026</span>
+        <h2 class="section__title">今月の成果目標</h2>
+        <p class="section__lead">7/31に○×で判断できる「測れる成果」。<br>（v3・2026-07-02更新／受注ベース・物販は利益・フォロワーはThreads）</p>
+      </div>
+
+      <div class="targets__grid">
+        <div class="target">
+          <div class="target__cat">AI案件（最優先）</div>
+          <div class="target__n">¥15万</div>
+          <div class="target__label">受注</div>
+          <p class="target__note">7月中に契約確定した金額の合計。件数は問わず金額で判定。</p>
+        </div>
+        <div class="target">
+          <div class="target__cat">物販</div>
+          <div class="target__n">¥5万</div>
+          <div class="target__label">利益</div>
+          <p class="target__note">売上ではなく利益で判定。</p>
+        </div>
+        <div class="target">
+          <div class="target__cat">発信</div>
+          <div class="target__n">1,000</div>
+          <div class="target__label">Threadsフォロワー</div>
+          <p class="target__note">主戦場＝Threads。インスタは投稿継続、数字判定はThreadsのみ。</p>
+        </div>
+      </div>
+
+      <div class="subgrid">
+        <div class="panel">
+          <div class="panel__title">お金以外の守り<span class="en">Guard</span></div>
+          <ul class="checklist">
+            <li><b>家族</b>：月2回、あんりと2人で出かける（ご飯・お風呂は習慣化済み）</li>
+            <li><b>学び</b>：本を1冊読む</li>
+            <li><b>体</b>：スクワット 月12回（1回30回）</li>
+            <li><b>快楽</b>：東京であんりと2人で一日デート（仕事以外の欲を1個、我慢せず）</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <div class="panel__title">毎日のやり方<span class="en">Daily</span></div>
+          <ul class="checklist">
+            <li><b>毎日アドネスを開いて</b>今日の一手を回す</li>
+            <li><b>案件応募 毎日5件</b>（だるい日も最低1件 or サイトを開く）</li>
+            <li><b>物販を回す</b>（出品・仕入れ）</li>
+            <li><b>SNS毎日3投稿</b>（Threads中心＋インスタも投稿）</li>
+            <li><b>来た案件・商談は即クロージング</b>（その場で日程 or 見積）</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CLOSING ===== -->
+  <section class="closing">
+    <div class="container">
+      <p class="closing__en">Still here. Still going.</p>
+      <h2 class="closing__line">まだまだ、<span class="accent">ここから。</span></h2>
+      <p class="closing__sub">
+        一人で背負ってきたつもりが、いつも誰かに助けられてた。<br>
+        “助けたい”と思ってもらえる人間で、いられたんやな。
+      </p>
+      <div class="closing__sign">HIRO · LIFE MASTER PLAN · 2026 → 2033</div>
+    </div>
+  </section>
+
+</body>
+</html>
