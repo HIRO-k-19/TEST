@@ -253,6 +253,38 @@
   }
   .story__stat .l{font-size:11.5px;letter-spacing:.12em;color:rgba(232,225,214,.55);margin-top:10px;}
 
+  /* ---------- Ladder ---------- */
+  .ladder{background:var(--ink-soft);color:#efe9e0;padding:110px 0 0;}
+  .ladder .section__head{margin-bottom:54px;}
+  .ladder .section__title{color:#f4efe7;}
+  .ladder .section__lead{color:rgba(239,233,224,.6);}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:end;}
+  .step{border:1px solid rgba(184,150,95,.3);border-radius:4px;padding:30px 26px;background:rgba(255,255,255,.02);position:relative;}
+  .step__when{font-family:var(--font-en);font-style:italic;letter-spacing:.12em;color:rgba(239,233,224,.7);font-size:14px;}
+  .step__year{font-family:var(--font-en);font-weight:600;font-size:30px;color:var(--gold-bright);line-height:1;margin:6px 0 14px;}
+  .step__label{font-family:var(--font-serif-jp);font-weight:600;font-size:16px;color:#f2ece2;margin-bottom:8px;}
+  .step__desc{font-size:13px;color:rgba(239,233,224,.62);line-height:1.8;}
+  .step--now{opacity:.82;}
+  .step--goal{border-color:var(--gold-bright);background:linear-gradient(180deg,rgba(184,150,95,.16),rgba(184,150,95,.04));padding:40px 28px;box-shadow:0 20px 50px -30px rgba(216,184,120,.6);}
+  .step--goal .step__badge{position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:var(--gold-bright);color:#231b10;font-family:var(--font-en);font-weight:700;letter-spacing:.2em;font-size:11px;padding:4px 16px;border-radius:20px;text-transform:uppercase;}
+  .step--goal .step__year{font-size:38px;}
+  .step--summit{opacity:.9;}
+
+  /* ---------- Goal (1 year) ---------- */
+  .goal{background:var(--ink-soft);color:#efe9e0;padding:70px 0 120px;}
+  .goal__theme{text-align:center;font-family:var(--font-serif-jp);font-weight:600;font-size:clamp(20px,3vw,30px);color:#f4efe7;margin:0 auto 12px;letter-spacing:.04em;}
+  .goal__theme .accent{color:var(--gold-bright);}
+  .goal__note{text-align:center;color:rgba(239,233,224,.5);font-size:13px;margin-bottom:52px;letter-spacing:.06em;}
+  .goal__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:24px;}
+  .gtarget{border:1px solid rgba(184,150,95,.35);border-radius:4px;padding:36px 26px;text-align:center;background:rgba(255,255,255,.02);}
+  .gtarget__cat{font-family:var(--font-en);font-style:italic;letter-spacing:.12em;color:var(--gold-bright);font-size:13px;}
+  .gtarget__n{font-family:var(--font-en);font-weight:600;font-size:clamp(30px,4.4vw,44px);color:#f7f1e7;line-height:1;margin:14px 0 8px;}
+  .gtarget__label{font-size:13.5px;color:rgba(239,233,224,.75);font-weight:500;}
+  .gtarget__from{font-size:11.5px;color:rgba(239,233,224,.45);margin-top:12px;line-height:1.7;}
+  .goal__guard{border:1px dashed rgba(184,150,95,.35);border-radius:4px;padding:26px 30px;display:flex;flex-wrap:wrap;gap:10px 34px;justify-content:center;}
+  .goal__guard span{font-size:13.5px;color:rgba(239,233,224,.8);}
+  .goal__guard b{color:var(--gold-bright);font-weight:600;font-family:var(--font-serif-jp);}
+
   /* ---------- Targets ---------- */
   .targets{background:var(--bg-cream);}
   .targets__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-bottom:24px;}
@@ -491,12 +523,78 @@
     </div>
   </section>
 
+  <!-- ===== LADDER ===== -->
+  <section class="ladder">
+    <div class="container">
+      <div class="section__head">
+        <span class="en-label">The Ladder</span>
+        <h2 class="section__title">ゴールへの階段</h2>
+        <p class="section__lead">頂上（7年後）から逆算し、いま狙うのは「1年後のゴール」。<br>その最初の一歩が、今月の完了基準。</p>
+      </div>
+      <div class="steps">
+        <div class="step step--now">
+          <div class="step__when">First Step · 今月</div>
+          <div class="step__year">2026<span style="font-size:16px">.07</span></div>
+          <div class="step__label">最初の一歩</div>
+          <p class="step__desc">完了基準を毎日回す。AI受注15万／物販利益5万／Threads1000人。</p>
+        </div>
+        <div class="step step--goal">
+          <span class="step__badge">Goal</span>
+          <div class="step__when">Aim Here · 1年後</div>
+          <div class="step__year">2027</div>
+          <div class="step__label">独立して、道を歩き始める</div>
+          <p class="step__desc">完了基準を積み上げた先。月収40万を安定させ、会社を独立する。</p>
+        </div>
+        <div class="step step--summit">
+          <div class="step__when">Summit · 7年後</div>
+          <div class="step__year">2033</div>
+          <div class="step__label">49歳・中年の星</div>
+          <p class="step__desc">年商5億／総フォロワー300万／人生を変えた6万人。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== GOAL (1 YEAR / 2027) ===== -->
+  <section class="goal">
+    <div class="container">
+      <p class="goal__theme">2027年のゴール：<span class="accent">独立して、自分の道を歩き始める。</span></p>
+      <p class="goal__note">※ 今月の完了基準から逆算した提案値（要調整）</p>
+      <div class="goal__grid">
+        <div class="gtarget">
+          <div class="gtarget__cat">AI案件（最優先）</div>
+          <div class="gtarget__n">月40万</div>
+          <div class="gtarget__label">月商を安定＝独立ライン</div>
+          <p class="gtarget__from">今月「受注15万」の継続・積み上げから</p>
+        </div>
+        <div class="gtarget">
+          <div class="gtarget__cat">物販</div>
+          <div class="gtarget__n">月利10万</div>
+          <div class="gtarget__label">利益を安定させる</div>
+          <p class="gtarget__from">今月「利益5万」の倍</p>
+        </div>
+        <div class="gtarget">
+          <div class="gtarget__cat">発信</div>
+          <div class="gtarget__n">3万</div>
+          <div class="gtarget__label">Threadsフォロワー</div>
+          <p class="gtarget__from">今月「1000人」からの継続発信</p>
+        </div>
+      </div>
+      <div class="goal__guard">
+        <span><b>家族</b>　月2回＋年1回は家族旅行</span>
+        <span><b>体</b>　体脂肪20%台前半・スクワット継続</span>
+        <span><b>学び</b>　年12冊</span>
+        <span><b>快楽</b>　あんりと季節ごとにデート</span>
+      </div>
+    </div>
+  </section>
+
   <!-- ===== TARGETS (JULY 2026) ===== -->
   <section class="section targets">
     <div class="container">
       <div class="section__head">
-        <span class="en-label">This Month · July 2026</span>
-        <h2 class="section__title">今月の成果目標</h2>
+        <span class="en-label">First Step · This Month · July 2026</span>
+        <h2 class="section__title">最初の一歩：今月の完了基準</h2>
         <p class="section__lead">7/31に○×で判断できる「測れる成果」。<br>（v3・2026-07-02更新／受注ベース・物販は利益・フォロワーはThreads）</p>
       </div>
 
